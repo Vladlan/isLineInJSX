@@ -91,6 +91,21 @@ const AllJSXSyntaxes: React.FC<AllJSXSyntaxesProps> = () => {
       <div>
         {renderJSX()}
       </div>
+      {
+        true && (
+          <div
+            style={{border: '1px solid red'}}
+            className="container"
+            data={
+              x && y > 0 
+              ? { key: 'value' } 
+              : { key: 'value2' }
+            }
+          >
+            1123
+          </div>
+        )
+      }
     </div>
   );
 };

@@ -1,12 +1,24 @@
 import ts from "typescript";
 import fs from "fs";
+import { isInsideCurlyBraces } from "./isInsideCurlyBraces";
 
-const propRegex = /[a-zA-Z]+\d+=/g;
+const propRegex = /^[a-zA-Z0-9]+(?==)/g;
 
 const isLineContainsProp = (line: string) => {
   return line.trim().match(propRegex);
 };
 
+const isLineHasJSX = (line: string) => {
+  return line.startsWith("<") || line.endsWith(">") || line.includes("/>");
+};
+
+const isJsx = (node: ts.Node) => {
+  return (
+    ts.isJsxElement(node) ||
+    ts.isJsxFragment(node) ||
+    ts.isJsxSelfClosingElement(node)
+  );
+};
 export function isLineInJSX(filePath: string, lineNumber: number): boolean {
   const fileContent = fs.readFileSync(filePath, "utf-8");
   const sourceFile = ts.createSourceFile(
@@ -26,13 +38,10 @@ export function isLineInJSX(filePath: string, lineNumber: number): boolean {
     return node.getStart(sourceFile) <= lineStart && node.getEnd() >= lineEnd;
   }
   function checkNode(node: ts.Node): ts.Node | undefined {
-    if (
-      ts.isJsxElement(node) ||
-      ts.isJsxFragment(node) ||
-      ts.isJsxSelfClosingElement(node)
-    ) {
+    if (isJsx(node) && nodeContainsLine(node)) {
       if (isLineContainsProp(line)) return;
-      if (nodeContainsLine(node)) return node;
+      if (isInsideCurlyBraces(filePath, lineNumber)) return;
+      return node;
     }
     return ts.forEachChild(node, checkNode);
   }
