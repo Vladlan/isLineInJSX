@@ -16,15 +16,18 @@ export const isInsideCurlyBraces = (
     const lineToCheckTop = lineNumber - i;
     const resTop = checkLineTop(lines, lineToCheckTop);
     const resBot = checkLineBot(lines, lineToCheckBot);
-    if (resTop !== undefined && resBot !== undefined) return resBot || resTop;
+    if (resTop !== undefined || resBot !== undefined)
+      return Boolean(resBot || resTop);
   }
 
   return false;
 };
 
 function checkLineTop(lines: string[], lineNumber: number) {
+  if (lines[lineNumber].includes("={") && !lines[lineNumber].includes("}"))
+    return true;
+  if (lines[lineNumber].includes("=>")) return true;
   if (/[<\/>}\[\]]/.test(lines[lineNumber])) return false;
-  if (lines[lineNumber].includes("{")) return true;
 }
 
 function checkLineBot(lines: string[], lineNumber: number) {

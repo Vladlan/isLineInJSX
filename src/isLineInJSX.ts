@@ -8,10 +8,6 @@ const isLineContainsProp = (line: string) => {
   return line.trim().match(propRegex);
 };
 
-const isLineHasJSX = (line: string) => {
-  return line.startsWith("<") || line.endsWith(">") || line.includes("/>");
-};
-
 const isJsx = (node: ts.Node) => {
   return (
     ts.isJsxElement(node) ||

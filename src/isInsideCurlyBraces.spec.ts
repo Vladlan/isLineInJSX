@@ -22,6 +22,7 @@ const inputOutput: [number, boolean][] = [
   [99, false],
   [100, true],
   [102, true],
+  [105, true],
   [113, false],
   [999, false],
 ];

@@ -101,6 +101,14 @@ const AllJSXSyntaxes: React.FC<AllJSXSyntaxesProps> = () => {
               ? { key: 'value' } 
               : { key: 'value2' }
             }
+            options={someArray.map((item) => ({ 
+              key: item,
+              value: item
+              data: { 
+                key: item,
+                value: item
+               }
+             }))}
           >
             1123
           </div>

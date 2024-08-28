@@ -19,6 +19,7 @@ const inputOutput: [number, boolean][] = [
   [99, false],
   [100, false],
   [102, false],
+  [105, false],
 ];
 
 describe("isLineInJSX", () => {
