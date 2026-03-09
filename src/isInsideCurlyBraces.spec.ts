@@ -23,6 +23,8 @@ const inputOutput: [number, boolean][] = [
   [100, true],
   [102, true],
   [105, true],
+  [106, true],
+  [107, true],
   [113, false],
   [999, false],
 ];

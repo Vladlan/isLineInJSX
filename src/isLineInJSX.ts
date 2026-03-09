@@ -1,5 +1,5 @@
 import ts from "typescript";
-import fs from "fs";
+import fs from "node:fs";
 import { isInsideCurlyBraces } from "./isInsideCurlyBraces";
 
 const propRegex = /^[a-zA-Z0-9]+(?==)/g;
